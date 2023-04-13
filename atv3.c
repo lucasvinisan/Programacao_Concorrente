@@ -60,6 +60,46 @@ int main(){
     int *vector = NULL; 
 
     vector = generate_vector_int(SIZE); 
-    show_vector_int(vector, SIZE); 
+    double sum = 0.0; /*Soma*/
+    double start, end; 
+
+
+    start = omp_get_wtime(); 
+    /*Sequential peocess*/
+    for(int i  = 0 ; i < SIZE; i++){
+        sum = sum + vector[i]; 
+    }
+    end = omp_get_wtime(); 
+
+    double time_sequential = end - start; 
+    double med = sum / (double)SIZE;
+
+
+    printf("Média: %lf\n", med);
+    printf("soma: %lf\n", sum); 
+    printf("Tempo sequencial: %lf\n", time_sequential); 
+
+    double sum_parallel; 
+
+    start = omp_get_wtime();
+    #pragma omp parallel num_threads(3)
+    {
+        #pragma omr for reduction(+:soma)
+            for(int j = 0; j < SIZE; j++){
+                sum_parallel += vector[j];
+            }
+    }
+    end = omp_get_wtime(); 
+    double time_parallel = end - start; 
+    double med_parallel = sum_parallel / (double)MAX; 
+    double Speedup = time_sequential / time_parallel; 
+    double efficiency = Speedup / 3.0; 
+
+    printf("Média: %lf\n", med_parallel);
+    printf("soma: %lf\n", sum_parallel); 
+    printf("Tempo sequencial: %lf\n", time_sequential);
+    printf("Eficiência: %lf\n", efficiency); 
+    printf("Speedup: %lf\n", Speedup); 
+
     return 0; 
 }
