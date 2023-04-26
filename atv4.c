@@ -70,7 +70,7 @@ int main(){
         #pragma omp critical
             for(int i = 0; i < SIZE; i++)
             {
-                if(((int)SIZE % vector[i]) == 0){
+                if((int)(SIZE % vector[i]) == 0){
                     sum = sum + vector[i]; 
                 }
             }
