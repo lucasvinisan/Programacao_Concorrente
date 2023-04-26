@@ -55,7 +55,7 @@ void show_vector_int(int *vector, int size){
 
 int main(){
     setlocale(LC_ALL, "Portuguese"); 
-    time_t temp; 
+    time_t Temp; 
     double start, end; 
     srand(time(NULL)); 
     int *vector = NULL; 
